@@ -1,0 +1,51 @@
+GET http://localhost:5000/
+
+###
+
+POST  http://localhost:5000/register/mentor
+Content-Type: application/json
+
+{
+    "email": "eniyavan@gmail.com",
+    "password":"12345@password"
+}
+
+###
+POST  http://localhost:5000/login/mentor
+Content-Type: application/json
+
+{
+    "email": "eniyavan@gmail.com",
+    "password":"12345@password"
+}
+
+###
+
+GET http://localhost:5000/login/google
+authorization:oauthtoken eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUwMDE3OWNkLWRjYTAtNDRiOS1hYjcyLTE4ZWFiMmZiNzc4NSIsImVtYWlsIjoiZW5peWF2YW4uYjIwMDNAZ21haWwuY29tIiwiaWF0IjoxNzE5NDczNDgwLCJleHAiOjE3MTk0NzM0OTV9.s10U68trtQOmX_cTXC-V5jPviurnRlkdgJVfKuPFVLg
+
+###
+
+POST http://localhost:5000/profile/mentor
+Content-Type: application/json
+
+{
+    "first_name":"eni",
+    "last_name":".b",
+    "category":"web development",
+    "occupation":"student",
+    "email":"eniyavan@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/profile/mentee
+Content-Type: application/json
+
+{
+    "first_name":"eni",
+    "last_name":"",
+    "category":["web development"],
+    "occupation":"student",
+    "email":"eniyavan.b2003@gmail.com"
+}
