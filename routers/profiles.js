@@ -270,7 +270,7 @@ router.route("/").post(async (req, res) => {
                 return res.json({ User: mentorUser, Posts: posts });
             } else if (menteeUser) {
                 // If user is found in mentee table
-                const result = await pool.query('SELECT COUNT(id) FROM answers WHERE owner_id = $1', [id]);
+                let result = await pool.query('SELECT COUNT(id) FROM answers WHERE owner_id = $1', [id]);
                 const Commentcount = result.rows[0].count;
                 result = await pool.query('SELECT COUNT(id) FROM post WHERE owner_id = $1', [id]);
                 const Postcount = result.rows[0].count;

@@ -11,6 +11,7 @@ const profiles = require('./routers/profiles');
 const post = require('./routers/post');
 const refresh = require('./routers/refresh');
 const answers = require('./routers/answers');
+const inbox = require('./routers/inbox');
 
 const pool = require('./modules/database');
 
@@ -42,6 +43,8 @@ app.use("/refresh", refresh);
 app.use("/post", post);
 
 app.use("/answers", answers);
+
+app.use("/inbox", inbox);
 
 // Google OAuth login route
 app.get('/auth/google/:userType', (req, res, next) => {
@@ -116,8 +119,6 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-
 
 // Start the server
 const server = app.listen(PORT, () => {
