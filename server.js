@@ -66,7 +66,7 @@ function generateTokens(user) {
 }
 
 // Google OAuth callback route
-app.get('/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login', session: false }), async (req, res) => {
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: process.env.FAILURE_REDIRECT_URL, session: false }), async (req, res) => {
     const userType = req.query.state;
     const user = req.user;
     try {
