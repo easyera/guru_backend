@@ -51,7 +51,6 @@ app.get('/', (req, res) => {
 
 // Google OAuth login route
 app.get('/auth/google/:userType', (req, res, next) => {
-    console.log("check");
     
     const userType = req.params.userType;
 
