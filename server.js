@@ -51,6 +51,8 @@ app.get('/', (req, res) => {
 
 // Google OAuth login route
 app.get('/auth/google/:userType', (req, res, next) => {
+    console.log("check");
+    
     const userType = req.params.userType;
 
     if (userType === 'mentor' || userType === 'mentee') {
@@ -97,7 +99,7 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: p
             const role = mentorCheck.rows.length > 0 ? 'mentor' : 'mentee';
 
             // Redirect with tokens and user data
-            return res.redirect(`http://localhost:5173/auth/google/callback?&accessToken=${accessToken}&role=${role}`);
+            return res.redirect(`${FRONT_URL}/google/callback?&accessToken=${accessToken}&role=${role}`);
         }
 
         // User does not exist, hash the Google profile ID (for simplicity)
@@ -116,7 +118,7 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: p
         const accessToken = generateTokens(newUser);
 
         // Redirect with tokens and user data
-        res.redirect(`http://localhost:5173/auth/google/callback?&accessToken=${accessToken}&role=${userType}`);
+        res.redirect(`${FRONT_URL}/auth/google/callback?&accessToken=${accessToken}&role=${userType}`);
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: 'Server error' });
