@@ -117,7 +117,7 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: p
         const accessToken = generateTokens(newUser);
 
         // Redirect with tokens and user data
-        res.redirect(`${process.env.FRONT_URL}/auth/google/callback?&accessToken=${accessToken}&role=${userType}`);
+        res.redirect(`${process.env.FRONT_URL}/google/callback?&accessToken=${accessToken}&role=${userType}`);
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ message: 'Server error' });
