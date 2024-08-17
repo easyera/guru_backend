@@ -318,5 +318,50 @@ router.route("/updatemessage").post(async (req, res) => {
     }
 });
 
+router.route("/getMessage").get(async (req, res) => {
+    const AccessToken = req.headers['authorization'];
+    const token = AccessToken.split(' ')[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+        if (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(403).json({ message: 'Token expired' });
+            } else {
+                return res.status(403).json({ message: 'Invalid token' });
+            }
+        }
+
+        const { conversationId } = req.query;
+
+        if (!conversationId) {
+            return res.status(400).json({ message: 'Invalid request data' });
+        }
+
+        try {
+            // Get today's date in the format used in your database
+            const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+
+            // Fetch messages for the specified conversation sent today
+            const messagesResult = await pool.query(
+                `SELECT * FROM messages 
+                 WHERE conversation_id = $1 AND DATE(timestamp) = $2
+                 ORDER BY timestamp ASC`,
+                [conversationId, today]
+            );
+
+            const messages = messagesResult.rows.map(message => ({
+                text: message.content,
+                time: formatTimestamp(message.timestamp), // Format the timestamp as needed
+                type: message.sender_id === user.id ? 'outgoing' : 'incoming',
+            }));
+
+            return res.json({ messages: messages });
+        } catch (error) {
+            console.error(error.message);
+            return res.status(500).json({ message: 'Server error' });
+        }
+    });
+});
+
 
 module.exports = router
