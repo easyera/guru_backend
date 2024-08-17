@@ -12,7 +12,6 @@ const post = require('./routers/post');
 const refresh = require('./routers/refresh');
 const answers = require('./routers/answers');
 const inbox = require('./routers/inbox');
-
 const pool = require('./modules/database');
 
 require('./auth');
@@ -45,6 +44,10 @@ app.use("/post", post);
 app.use("/answers", answers);
 
 app.use("/inbox", inbox);
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+})
 
 // Google OAuth login route
 app.get('/auth/google/:userType', (req, res, next) => {
