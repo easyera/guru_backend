@@ -12,13 +12,14 @@ router.route("/mentor").post(async (req, res) => {
         // Check if the email already exists in mentor or mentee tables
         const emailCheckMentor = await pool.query(
             'SELECT id FROM mentor WHERE email = $1',
-            [email, firstName]
+            [email]
         );
+
 
         // Check in 'mentee' table
         const emailCheckMentee = await pool.query(
             'SELECT id FROM mentee WHERE email = $1',
-            [email, firstName]
+            [email]
         );
 
         if (emailCheckMentor.rows.length > 0 || emailCheckMentee.rows.length > 0) {
@@ -55,14 +56,15 @@ router.route("/mentee").post(async (req, res) => {
         // Check if the email already exists in mentor or mentee tables
         const emailCheckMentor = await pool.query(
             'SELECT id FROM mentor WHERE email = $1',
-            [email, firstName]
+            [email]
         );
 
         // Check in 'mentee' table
         const emailCheckMentee = await pool.query(
             'SELECT id FROM mentee WHERE email = $1',
-            [email, firstName]
+            [email]
         );
+        
 
         if (emailCheckMentor.rows.length > 0 || emailCheckMentee.rows.length > 0) {
             return res.status(400).json({ message: 'Email already exists' });
