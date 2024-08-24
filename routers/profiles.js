@@ -153,12 +153,12 @@ router.route("/mentee").post(upload.single('profile_image_data'), async (req, re
                     finalProfileImageUrl = profile_image;
                 }
 
-                // const formattedCategory = `{${category.split(',').map(item => `"${item.trim()}"`).join(',')}}`;
+                const formattedCategory = `{${category.split(',').map(item => `"${item.trim()}"`).join(',')}}`;
 
                 const fieldsToUpdate = replaceEmptyWithNull({
                     first_name,
                     last_name,
-                    category, // : formattedCategory
+                    category : formattedCategory,
                     occupation,
                     profile_image: finalProfileImageUrl,
                     institution_name,
