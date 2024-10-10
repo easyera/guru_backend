@@ -4,7 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const dashbord = require("./routers/dashbord");
+const dashboard = require("./routers/dashboard");
 const login = require("./routers/login");
 const register = require('./routers/register');
 const profiles = require('./routers/profiles');
@@ -35,7 +35,7 @@ app.use('/register', register);
 
 app.use('/profile', profiles);
 
-app.use("/dashbord", dashbord);
+app.use("/dashboard", dashboard);
 
 app.use("/refresh", refresh);
 
@@ -73,6 +73,7 @@ function generateTokens(user) {
 app.get('/google/callback', passport.authenticate('google', { failureRedirect: process.env.FAILURE_REDIRECT_URL, session: false }), async (req, res) => {
     const userType = req.query.state;
     const user = req.user;
+    
     try {
         // Check if the user already exists in either mentor or mentee database
         const mentorCheckQuery = 'SELECT * FROM mentor WHERE email = $1';
